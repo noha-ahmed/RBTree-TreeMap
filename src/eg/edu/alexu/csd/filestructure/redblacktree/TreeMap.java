@@ -105,19 +105,19 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public Map.Entry lastEntry() {
-        if(redBlackTree.isEmpty()){
+        if(this.redBlackTree.isEmpty()){
             return null;
         }
-        INode node = lastEntryNode(redBlackTree.getRoot());
-        return new MapEntry(node.getKey(),node.getValue());
+        INode node = lastEntryNode(this.redBlackTree.getRoot());
+        return new MapEntry<T, V>((T)node.getKey(), (V)node.getValue());
     }
 
     @Override
     public Comparable lastKey() {
-        if(redBlackTree.isEmpty()){
+        if(this.redBlackTree.isEmpty()){
             return null;
         }
-        INode node = lastEntryNode(redBlackTree.getRoot());
+        INode node = lastEntryNode(this.redBlackTree.getRoot());
         return node.getKey();
     }
 
@@ -130,7 +130,11 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public Map.Entry pollLastEntry() {
-        return null;
+        Map.Entry<T, V> lastEntry = lastEntry();
+        if(lastEntry!=null){
+            this.redBlackTree.delete(lastEntry.getKey());
+        }
+        return lastEntry;
     }
 
     @Override
