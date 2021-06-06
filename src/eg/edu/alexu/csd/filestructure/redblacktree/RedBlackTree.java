@@ -19,14 +19,33 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
 
     }
 
+    public INode searchForNode(INode node, Comparable key){
+        if(node.isNull()){
+            return null;
+        }
+        if(node.getKey().compareTo(key) == 0){
+            return node;
+        }else if(key.compareTo(node.getKey()) > 0){
+            return searchForNode(node.getRightChild(), key);
+        }else {
+            return searchForNode(node.getLeftChild(), key);
+        }
+    }
+
+
     @Override
     public Object search(Comparable key) {
-
+        INode node = searchForNode(this.root, key);
+        if(node != null)
+            return node.getValue();
         return null;
     }
 
     @Override
     public boolean contains(Comparable key) {
+        Object value  = search(key);
+        if(value != null)
+            return true;
         return false;
     }
 
