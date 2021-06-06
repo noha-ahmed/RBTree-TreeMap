@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
-public class RedBlackTree implements IRedBlackTree {
+public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree {
 
     INode root = null;
 
@@ -21,6 +21,7 @@ public class RedBlackTree implements IRedBlackTree {
 
     @Override
     public Object search(Comparable key) {
+
         return null;
     }
 
@@ -29,7 +30,7 @@ public class RedBlackTree implements IRedBlackTree {
         return false;
     }
 
-    private INode leftRotation(Node node){
+    private INode leftRotation(INode node){
         INode parent =  node.getParent();
         INode rightChild = node.getRightChild();
         INode newRightChild = rightChild.getLeftChild();
@@ -49,7 +50,7 @@ public class RedBlackTree implements IRedBlackTree {
         newRightChild.setParent(node);
         return rightChild;
     }
-    private INode rightRotation(Node node){
+    private INode rightRotation(INode node){
         INode parent = node.getParent();
         INode leftChild = node.getLeftChild();
         INode newLeftChild = leftChild.getRightChild();
@@ -67,7 +68,7 @@ public class RedBlackTree implements IRedBlackTree {
         newLeftChild.setParent(node);
         return leftChild;
     }
-    private void reColor(Node node){
+    private void reColor(INode node){
         if(node.getColor()){
             node.setColor(false);
         }else{
@@ -75,10 +76,110 @@ public class RedBlackTree implements IRedBlackTree {
         }
     }
 
+    public void normalInsert(INode root, INode node){
+        if(root.isNull()){
+            INode parent = root.getParent();
+            if(parent.getRightChild() == root){
+                parent.setRightChild(node);
+            }else{
+                parent.setLeftChild(node);
+            }
+            node.setParent(parent);
+            INode nilLeft = new Node();
+            INode nilRight = new Node();
+            nilLeft.setColor(false);
+            nilRight.setColor(false);
+            node.setLeftChild(nilLeft);
+            node.setRightChild(nilRight);
+            nilLeft.setParent(node);
+            nilRight.setParent(node);
+            return;
+        }
+        if(node.getKey().compareTo(root.getKey()) > 0){
+            normalInsert(root.getRightChild(), node);
+        }else if(node.getKey().compareTo(root.getKey()) < 0){
+            normalInsert(root.getLeftChild(), node);
+        }else {
+            root.setValue(node.getValue());
+        }
+    }
+
+    private void fixInsert(INode node){
+        if(node == root){
+            node.setColor(false);
+            return;
+        }
+        if(node.getParent().getColor()){
+            INode parent = node.getParent();
+            INode grandParent = parent.getParent();
+            INode uncle = null;
+            if(grandParent.getRightChild() == parent){
+                // if parent is right child, uncle is the left child
+                uncle = grandParent.getLeftChild();
+            }else{
+                // if parent is left child, uncle is the right child
+                uncle = grandParent.getRightChild();
+            }
+            if(uncle.getColor()){
+                //
+                reColor(parent);
+                reColor(uncle);
+                reColor(grandParent);
+                fixInsert(grandParent);
+            }else{
+                // parent is red and uncle is black
+                if((grandParent.getRightChild() == parent) && (parent.getRightChild() == node) ){
+                    // right right case
+                    leftRotation(grandParent);
+                    reColor(grandParent);
+                    reColor(parent);
+                }else  if((grandParent.getRightChild() == parent) && (parent.getLeftChild() == node)){
+                    // right left case
+                    rightRotation(parent);
+                    leftRotation(grandParent);
+                    reColor(grandParent);
+                    reColor(node);
+                }else if((grandParent.getLeftChild() == parent) && (parent.getLeftChild() == node)){
+                    // left left case
+                    rightRotation(grandParent);
+                    reColor(grandParent);
+                    reColor(parent);
+                }else{
+                    // left right case
+                    leftRotation(parent);
+                    rightRotation(grandParent);
+                    reColor(grandParent);
+                    reColor(node);
+                }
+            }
+        }
+    }
+
     @Override
     public void insert(Comparable key, Object value) {
-        Node node = new Node();
+        // creating new node
+        INode node = new Node();
+        node.setKey(key);
+        node.setValue(value);
 
+        // root is null
+        if(root == null){
+            root = node;
+            INode nilLeft = new Node();
+            INode nilRight = new Node();
+            nilLeft.setColor(false);
+            nilRight.setColor(false);
+            node.setRightChild(nilRight);
+            node.setLeftChild(nilLeft);
+            nilLeft.setParent(node);
+            nilRight.setParent(node);
+            reColor(node);
+        }else {
+            // else normal BST insert
+            normalInsert(this.root, node);
+        }
+        /// checking for red parent
+        fixInsert(node);
     }
 
     @Override
