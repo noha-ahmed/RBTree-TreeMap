@@ -7,7 +7,8 @@ import java.util.Set;
 
 public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
-    RedBlackTree<T, V> redBlackTree = new RedBlackTree<T, V>();
+    private RedBlackTree<T, V> redBlackTree = new RedBlackTree<T, V>();
+    private int size = 0;
 
     @Override
     public Map.Entry ceilingEntry(Comparable key) {
@@ -39,13 +40,29 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
         return null;
     }
 
+    private INode getLeastKey(INode root){
+        if(root.getLeftChild().isNull()){
+            return root;
+        }
+        return getLeastKey(root.getLeftChild());
+    }
+
     @Override
     public Map.Entry firstEntry() {
+        if(!this.redBlackTree.isEmpty()){
+            INode leastKeyNode = getLeastKey(this.redBlackTree.getRoot());
+            Map.Entry<T, V> entry = new MapEntry<T, V>((T)leastKeyNode.getKey(),(V)leastKeyNode.getValue());
+            return entry;
+        }
         return null;
     }
 
     @Override
     public Comparable firstKey() {
+        if(!this.redBlackTree.isEmpty()){
+            INode node = getLeastKey(this.redBlackTree.getRoot());
+            return node.getKey();
+        }
         return null;
     }
 
@@ -91,7 +108,9 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public Map.Entry pollFirstEntry() {
-        return null;
+        Map.Entry<T, V> entry = firstEntry();
+        this.redBlackTree.delete(entry.getKey());
+        return entry;
     }
 
     @Override
@@ -101,11 +120,13 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public void put(Comparable key, Object value) {
-
+        this.redBlackTree.insert(key, value);
+        this.size++;
     }
 
     @Override
     public void putAll(Map map) {
+        //RedBlackTree
 
     }
 
@@ -116,11 +137,19 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
     public Collection values() {
         return null;
+    }
+
+    public RedBlackTree<T, V> getRedBlackTree() {
+        return redBlackTree;
+    }
+
+    public void setRedBlackTree(RedBlackTree<T, V> redBlackTree) {
+        this.redBlackTree = redBlackTree;
     }
 }

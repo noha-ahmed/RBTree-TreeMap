@@ -2,7 +2,7 @@ package eg.edu.alexu.csd.filestructure.redblacktree;
 
 public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree {
 
-    INode root = null;
+    private INode root = null;
 
     @Override
     public INode getRoot() {

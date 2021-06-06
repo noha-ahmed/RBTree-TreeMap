@@ -2,28 +2,28 @@ package eg.edu.alexu.csd.filestructure.redblacktree;
 
 import java.util.Map;
 
-public class MapEntry<k,v> implements Map.Entry<k, v>{
-    private k key;
-    private v value;
+public class MapEntry<K, V> implements Map.Entry<K, V>{
+    private K key;
+    private V value;
 
-    public MapEntry(k key, v value){
+    public MapEntry(K key, V value){
         this.key = key;
         this.value = value;
     }
 
     @Override
-    public k getKey() {
+    public K getKey() {
         return this.key;
     }
 
     @Override
-    public v getValue() {
+    public V getValue() {
         return this.value;
     }
 
     @Override
-    public v setValue(v value) {
-        v oldValue = this.value;
+    public V setValue(V value) {
+        V oldValue = this.value;
         this.value = value;
         return oldValue;
     }
