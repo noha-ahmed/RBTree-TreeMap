@@ -96,14 +96,29 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
         return null;
     }
 
+    private INode lastEntryNode(INode node){
+        if(node.getRightChild().isNull()){
+            return node;
+        }
+        return lastEntryNode(node.getRightChild());
+    }
+
     @Override
     public Map.Entry lastEntry() {
-        return null;
+        if(redBlackTree.isEmpty()){
+            return null;
+        }
+        INode node = lastEntryNode(redBlackTree.getRoot());
+        return new MapEntry(node.getKey(),node.getValue());
     }
 
     @Override
     public Comparable lastKey() {
-        return null;
+        if(redBlackTree.isEmpty()){
+            return null;
+        }
+        INode node = lastEntryNode(redBlackTree.getRoot());
+        return node.getKey();
     }
 
     @Override
