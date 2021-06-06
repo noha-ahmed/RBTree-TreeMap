@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
+
+    RedBlackTree<T, V> redBlackTree = new RedBlackTree<T, V>();
+
     @Override
     public Map.Entry ceilingEntry(Comparable key) {
         return null;
