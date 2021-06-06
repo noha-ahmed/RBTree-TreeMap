@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class TreeMap implements ITreeMap{
+public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
     @Override
     public Map.Entry ceilingEntry(Comparable key) {
         return null;
