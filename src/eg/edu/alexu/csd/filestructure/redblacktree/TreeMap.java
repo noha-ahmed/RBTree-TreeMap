@@ -124,7 +124,9 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
     @Override
     public Map.Entry pollFirstEntry() {
         Map.Entry<T, V> entry = firstEntry();
-        this.redBlackTree.delete(entry.getKey());
+        if(entry != null) {
+            this.redBlackTree.delete(entry.getKey());
+        }
         return entry;
     }
 
@@ -145,8 +147,12 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap{
 
     @Override
     public void putAll(Map map) {
-        //RedBlackTree
-
+        Set<Map.Entry<T, V>> enrtyset = map.entrySet();
+        Map.Entry<T, V>[] entries = (Map.Entry<T, V>[]) enrtyset.toArray();
+        for(int i = 0; i < entries.length; i++){
+            Map.Entry<T, V> entry = entries[i];
+            this.redBlackTree.insert(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
