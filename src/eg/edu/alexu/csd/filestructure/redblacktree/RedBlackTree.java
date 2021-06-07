@@ -49,7 +49,7 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
         return false;
     }
 
-    public INode leftRotation(INode node){
+    private INode leftRotation(INode node){
         INode parent =  node.getParent();
         INode rightChild = node.getRightChild();
         INode newRightChild = rightChild.getLeftChild();
@@ -69,7 +69,7 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
         newRightChild.setParent(node);
         return rightChild;
     }
-    public INode rightRotation(INode node){
+    private INode rightRotation(INode node){
         INode parent = node.getParent();
         INode leftChild = node.getLeftChild();
         INode newLeftChild = leftChild.getRightChild();
