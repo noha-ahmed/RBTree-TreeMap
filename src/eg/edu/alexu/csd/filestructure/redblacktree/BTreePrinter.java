@@ -28,7 +28,10 @@ class BTreePrinter {
         for (INode node : nodes) {
             if (node != null) {
                 if(node.isNull()) System.out.print("N");
-                else System.out.print(node.getKey());
+                else {
+                    String sColor = node.getColor() == true ? "R" : "B";
+                    System.out.print(node.getKey() + sColor);
+                }
 
                 newNodes.add(node.getLeftChild());
                 newNodes.add(node.getRightChild());
