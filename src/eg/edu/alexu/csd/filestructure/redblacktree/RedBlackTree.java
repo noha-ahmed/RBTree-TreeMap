@@ -11,12 +11,12 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return (this.root==null);
     }
 
     @Override
     public void clear() {
-
+        this.root=null;
     }
 
     public INode searchForNode(INode node, Comparable key){
@@ -35,6 +35,9 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
 
     @Override
     public Object search(Comparable key) {
+        if(this.root==null){
+            return null;
+        }
         INode node = searchForNode(this.root, key);
         if(node != null)
             return node.getValue();
@@ -203,6 +206,129 @@ public class RedBlackTree<T extends Comparable<T>, V>  implements IRedBlackTree 
 
     @Override
     public boolean delete(Comparable key) {
-        return false;
+        boolean initialColorNode;
+        boolean initialColorChild;
+
+        //search function
+
+        INode node = searchForNode(root, key);
+        if( node == null ) return false;
+
+        //step1
+        if (node.getLeftChild().isNull()) {
+            initialColorNode = node.getColor();
+            initialColorChild = node.getRightChild().getColor();
+
+            transplant(node,node.getRightChild());
+            node = node.getRightChild();
+        }
+        //step2
+        else if (node.getRightChild().isNull()) {
+            initialColorNode = node.getColor();
+            initialColorChild = node.getLeftChild().getColor();
+            transplant(node,node.getLeftChild());
+            node = node.getLeftChild();
+        }
+        //step3
+        else {
+            INode newNode=getSuccessor(node,key,new Node());
+            node.setValue(newNode.getValue());
+            //  newNode.getParent().setLeftChild(newNode.getRightChild());
+            transplant(newNode,newNode.getRightChild());
+            initialColorNode = newNode.getColor();
+            initialColorChild=newNode.getRightChild().getColor();
+            node = newNode.getRightChild();
+        }
+
+        if( initialColorNode == Node.RED || initialColorChild == Node.RED ){
+            node.setColor(Node.BLACK);
+        }
+        else{
+            fixTree(node);
+        }
+
+        return true;
+    }
+
+    /**
+     * putting v in place of u and connecting v with u's parent
+     * @param u (parent)
+     * @param v (child)
+     */
+    private void transplant(INode u, INode v){
+        if (u.getParent() == null) {
+            this.root = v;
+        } else if (u.equals(u.getParent().getLeftChild()) ){
+            u.getParent().setLeftChild(v);
+        } else {
+            u.getParent().setRightChild(v);
+        }
+        v.setParent(u.getParent());
+    }
+    private void fixTree( INode node ) {
+
+    }
+
+    public INode getPredecessor(INode node, Comparable key, INode pre) {
+
+        if (node.isNull()) {
+            return pre;
+        }
+        if (node.getKey().equals(key)) {
+            if (!node.getLeftChild().isNull()) {
+                INode currentNode = node.getLeftChild();
+                while (!currentNode.getRightChild().isNull()) {
+                    currentNode = currentNode.getRightChild();
+                }
+                pre = currentNode;
+            }
+            return pre;
+        } else if (node.getKey().compareTo(key) == 1) {
+            return getPredecessor(node.getLeftChild(), key, pre);
+        } else {
+            pre = node;
+            return getPredecessor(node.getRightChild(), key, pre);
+        }
+
+    }
+
+    public INode getSuccessor(INode node, Comparable key, INode suc) {
+        if (node.isNull()) {
+            return suc;
+        }
+        if (node.getKey().equals(key)) {
+            if (!node.getRightChild().isNull()) {
+                INode currentNode = node.getRightChild();
+                while (!currentNode.getLeftChild().isNull()) {
+                    currentNode = currentNode.getLeftChild();
+                }
+                suc = currentNode;
+            }
+            return suc;
+        } else if (node.getKey().compareTo(key) == 1) {
+            suc = node;
+            return getSuccessor(node.getLeftChild(), key, suc);
+        } else {
+            return  getSuccessor(node.getRightChild(), key, suc);
+        }
+
+    }
+
+    public void printHelper(INode root, String indent, boolean last) {
+        if (root != null) {
+            System.out.print(indent);
+            if (last) {
+                System.out.print("R----");
+                indent += "   ";
+            } else {
+                System.out.print("L----");
+                indent += "|  ";
+            }
+
+            String sColor = root.getColor() == true ? "RED " : "BLACK ";
+            System.out.println(root.getKey() + " " + sColor );
+            printHelper(root.getLeftChild(), indent, false);
+            printHelper(root.getRightChild(), indent, true);
+        }
     }
 }

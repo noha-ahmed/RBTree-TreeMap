@@ -14,60 +14,21 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public Map.Entry ceilingEntry(Comparable key) {
-		INode temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-		boolean flag = false;
-		if (temp==null) {
-			put(key,null);
-			temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			flag=true;
-		}
-		if(temp.getRightChild()!=null) {
-			temp= temp.getRightChild();
-			return new MapEntry<T, V>((T) temp.getKey(), (V) temp.getValue());
-		}
-		if(flag==true) {
-			remove(key);
-			return null;
-		}
-		return new MapEntry<T, V>((T) temp.getKey(), (V) temp.getValue());
-		
-		
+		INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
+		Map.Entry<T, V> entry = new MapEntry<T, V>((T)node.getKey(),(V)node.getValue());
+		return entry;
 	}
 
 	@Override
 	public Comparable ceilingKey(Comparable key) {
-		INode temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-		boolean flag = false;
-		if (temp==null) {
-			put(key,null);
-			temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			flag=true;
-		}
-		if(temp.getRightChild()!=null) {
-			temp= temp.getRightChild();
-			return temp.getKey();
-		}
-		if(flag==true) {
-			remove(key);
-			return null;
-		}
-		return temp.getKey();
+		INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
+		return node.getKey();
 	}
-
 	@Override
 	public void clear() {
-		INode node = this.redBlackTree.getRoot();
-		clearNode(node);
+		this.redBlackTree.clear();
+	}
 
-	}
-	
-	private void clearNode(INode node) {
-		if(node==null)
-			return;
-		clearNode(node.getLeftChild());
-		clearNode(node.getRightChild());
-		remove(node.getKey());
-	}
 
 	@Override
 	public boolean containsKey(Comparable key) {
@@ -128,42 +89,15 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public Map.Entry floorEntry(Comparable key) {
-		INode temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-		boolean flag = false;
-		if (temp==null) {
-			put(key,null);
-			temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			flag=true;
-		}
-		if(temp.getLeftChild()!=null) {
-			temp= temp.getLeftChild();
-			return new MapEntry<T, V>((T) temp.getKey(), (V) temp.getValue());
-		}
-		if(flag==true) {
-			remove(key);
-			return null;
-		}
-		return new MapEntry<T, V>((T) temp.getKey(), (V) temp.getValue());
+		INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
+		Map.Entry<T, V> entry = new MapEntry<T, V>((T)node.getKey(),(V)node.getValue());
+		return entry;
 	}
 
 	@Override
 	public Comparable floorKey(Comparable key) {
-		INode temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-		boolean flag = false;
-		if (temp==null) {
-			put(key,null);
-			temp = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			flag=true;
-		}
-		if(temp.getLeftChild()!=null) {
-			temp= temp.getLeftChild();
-			return temp.getKey();
-		}
-		if(flag==true) {
-			remove(key);
-			return null;
-		}
-		return temp.getKey();
+		INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
+		return node.getKey();
 	}
 
 	@Override
@@ -301,7 +235,9 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public boolean remove(Comparable key) {
-		return false;
+		boolean removed = this.redBlackTree.delete(key);
+		if( removed ) size--;
+		return removed;
 	}
 
 	@Override
