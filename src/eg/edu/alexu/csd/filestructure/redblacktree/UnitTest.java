@@ -1678,10 +1678,12 @@ public class UnitTest {
 	}
 	
 	private boolean verifyProperty2(INode<Integer, String> node) {
+		System.out.println("prop 2");
 		return node.getColor() == INode.BLACK;
 	}
 
 	private boolean verifyProperty3(INode<Integer, String> node) {
+		System.out.println("prop 3");
 		if (node == null || node.isNull()) return node.getColor() == INode.BLACK;
 
 		return verifyProperty3(node.getLeftChild()) && verifyProperty3(node.getRightChild());
