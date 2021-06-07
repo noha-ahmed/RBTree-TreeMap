@@ -1,11 +1,6 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.*;
 
 public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
@@ -102,11 +97,7 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public Object get(Comparable key) {
-		if (this.redBlackTree.isEmpty()) {
-			return null;
-		}
-		Object value = this.redBlackTree.search(key);
-		return value;
+		return this.redBlackTree.search(key);
 	}
 
 	@Override
