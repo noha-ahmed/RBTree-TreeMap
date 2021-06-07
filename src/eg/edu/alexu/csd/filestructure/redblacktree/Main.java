@@ -3,6 +3,11 @@ package eg.edu.alexu.csd.filestructure.redblacktree;
 public class Main {
 
     public static void main(String[] args){
+        test3();
+
+    }
+
+    static void  test1(){
         RedBlackTree<Integer, Integer> tree = new RedBlackTree<Integer, Integer>();
         tree.insert(33,33);
         tree.insert(13,13);
@@ -49,13 +54,10 @@ public class Main {
         System.out.println(tree.delete(70) + " 70");
         BTreePrinter.printNode(tree.getRoot());
         System.out.println(tree.getRoot() +" " + tree.isEmpty());
-
-
-
-     //   tree.printHelper(tree.getRoot(),"",false);
+        //   tree.printHelper(tree.getRoot(),"",false);
 
         // System.out.println(tree.search(33));
-       // System.out.println(tree.contains(41));
+        // System.out.println(tree.contains(41));
 
         TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
 
@@ -69,4 +71,53 @@ public class Main {
 
          */
     }
+
+    static void test2(){
+        RedBlackTree<Integer, String> rbTree = new RedBlackTree<>();
+        rbTree.insert(30, null);
+        rbTree.insert(15, null);
+        rbTree.insert(24, null);
+        rbTree.insert(13, null);
+        rbTree.insert(55, null);
+        rbTree.insert(12, null);
+        rbTree.insert(23, null);
+        rbTree.insert(9, null);
+        rbTree.insert(10, null);
+        rbTree.insert(11, null);
+        rbTree.insert(8, null);
+        rbTree.insert(7, null);
+        rbTree.insert(3, null);
+        rbTree.insert(16, null);
+        rbTree.insert(18, null);
+        rbTree.insert(22, null);
+        rbTree.insert(25, null);
+        rbTree.insert(32, null);
+        rbTree.insert(31, null);
+        rbTree.insert(66, null);
+        rbTree.delete(30);
+        rbTree.delete(15);
+        rbTree.insert(77, null);
+        rbTree.delete(66);
+        rbTree.delete(7);
+        rbTree.delete(8);
+        rbTree.delete(16);
+        String expectedInOrderTraversal = "3 Red 9 Black 10 Black 11 Red 12 Black 13 Black " +
+                "18 Black 22 Black 23 Black 24 Red 25 Black 31 Black " +
+                "32 Black 55 Red 77 Black ";
+        BTreePrinter.printNode(rbTree.getRoot());
+    }
+
+    static void test3(){
+        RedBlackTree<Integer, Integer> tree = new RedBlackTree<Integer, Integer>();
+        tree.insert(15,0);
+        BTreePrinter.printNode(tree.getRoot());
+        tree.insert(14,0);
+        BTreePrinter.printNode(tree.getRoot());
+        tree.insert(16,0);
+        BTreePrinter.printNode(tree.getRoot());
+        tree.insert(13,0);
+        BTreePrinter.printNode(tree.getRoot());
+
+    }
 }
+
