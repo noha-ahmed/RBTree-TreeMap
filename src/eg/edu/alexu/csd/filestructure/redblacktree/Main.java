@@ -18,9 +18,41 @@ public class Main {
         tree.insert(67,67);
         tree.insert(-5,-5);
         tree.insert(70,70);
-        tree.printHelper(tree.getRoot(),"",false);
-        System.out.println(tree.delete(33));
-        tree.printHelper(tree.getRoot(),"",false);
+        //tree.printHelper(tree.getRoot(),"",false);
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(33) + " 33");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(13 ) + " 13");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(53) + " 53" );
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(11) + " 11");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(21) + " 21");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(41) + " 41");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(61) + " 61");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(15) + " 15");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(31) + " 31");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(20) + " 20");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(100) + " 100");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(67) + " 67");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(-5) + " -5");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.delete(70) + " 70");
+        BTreePrinter.printNode(tree.getRoot());
+        System.out.println(tree.getRoot() +" " + tree.isEmpty());
+
+
+
+     //   tree.printHelper(tree.getRoot(),"",false);
 
         // System.out.println(tree.search(33));
        // System.out.println(tree.contains(41));

@@ -234,10 +234,15 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
         boolean initialColorNode;
         boolean initialColorChild;
 
+
         //search function
 
         INode node = searchForNode(root, key);
         if (node == null) return false;
+        if ( root.getKey().equals(key) && root.getRightChild().isNull() && root.getLeftChild().isNull()){
+            root = null;
+            return true;
+        }
 
         //step1
         if (node.getLeftChild().isNull()) {
@@ -266,11 +271,17 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
             node = newNode.getRightChild();
         }
 
+        if(root.isNull()){
+            root = null;
+            return true;
+        }
+
         if (initialColorNode == Node.RED || initialColorChild == Node.RED) {
             node.setColor(Node.BLACK);
         } else {
             fixTree(node);
         }
+
 
         return true;
     }
@@ -293,17 +304,16 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
     }
 
     private void fixTree(INode node) {
-
-        INode sibling = getSibling(node);
         while ((node != this.root) && (isBlack(node))) {
+            INode sibling = getSibling(node);
             //case1 sibling is red
             if (!isBlack(sibling)) {
                 sibling.setColor(Node.BLACK);
                 sibling.getParent().setColor(Node.RED);
                 if (isLeftChild(sibling)) {
-                    rightRotation(sibling);
+                    rightRotation(sibling.getParent());
                 } else {
-                    leftRotation(sibling);
+                    leftRotation(sibling.getParent());
                 }
                 sibling = getSibling(node);
             }
@@ -320,7 +330,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
                     if (isBlack(sibling.getRightChild())) {
                         sibling.getLeftChild().setColor(Node.BLACK);
                         sibling.setColor(Node.RED);
-                        rightRotation(sibling.getLeftChild());
+                        rightRotation(sibling);
                         sibling = node.getParent().getRightChild();
                     }
                     sibling.setColor(node.getParent().getColor());
@@ -335,7 +345,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
                     if (isBlack(sibling.getLeftChild())) {
                         sibling.getRightChild().setColor(Node.BLACK);
                         sibling.setColor(Node.RED);
-                        leftRotation(sibling.getRightChild());
+                        leftRotation(sibling);
                         sibling = node.getParent().getLeftChild();
                     }
                     sibling.setColor(node.getParent().getColor());
@@ -367,7 +377,9 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
     }
 
     public INode getPredecessor(INode node, Comparable key, INode pre) {
-
+        if(key==null){
+            throw new RuntimeErrorException(new Error(),"key is null");
+        }
         if (node.isNull()) {
             return pre;
         }
@@ -390,6 +402,9 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
     }
 
     public INode getSuccessor(INode node, Comparable key, INode suc) {
+        if(key==null){
+            throw new RuntimeErrorException(new Error(),"key is null");
+        }
         if (node.isNull()) {
             return suc;
         }
@@ -421,7 +436,6 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
                 System.out.print("L----");
                 indent += "|  ";
             }
-
             String sColor = root.getColor() == true ? "RED " : "BLACK ";
             System.out.println(root.getKey() + " " + sColor);
             printHelper(root.getLeftChild(), indent, false);
