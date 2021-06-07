@@ -325,12 +325,5 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 		addValueToCol(node.getRightChild(),col);
 		col.add(node.getValue());
 	}
-
-	public RedBlackTree<T, V> getRedBlackTree() {
-		return redBlackTree;
-	}
-
-	public void setRedBlackTree(RedBlackTree<T, V> redBlackTree) {
-		this.redBlackTree = redBlackTree;
-	}
+	
 }
