@@ -242,7 +242,6 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public int size() {
-
 		return this.size;
 	}
 
