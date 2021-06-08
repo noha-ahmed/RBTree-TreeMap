@@ -9,7 +9,6 @@ class BTreePrinter {
 
     public static <T extends Comparable<?>> void printNode(INode root) {
         int maxLevel = BTreePrinter.maxLevel(root);
-
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
