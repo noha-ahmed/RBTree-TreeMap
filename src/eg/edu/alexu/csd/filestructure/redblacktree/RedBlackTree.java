@@ -5,7 +5,7 @@ import javax.management.RuntimeErrorException;
 public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
     private INode root = null;
-    public int size=0;
+    private int size=0;
 
     public int getSize() {
         return this.size;
@@ -414,23 +414,6 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
             return getSuccessor(node.getLeftChild(), key, suc);
         } else {
             return getSuccessor(node.getRightChild(), key, suc);
-        }
-    }
-
-    public void printHelper(INode root, String indent, boolean last) {
-        if (root != null) {
-            System.out.print(indent);
-            if (last) {
-                System.out.print("R----");
-                indent += "   ";
-            } else {
-                System.out.print("L----");
-                indent += "|  ";
-            }
-            String sColor = root.getColor() == true ? "RED " : "BLACK ";
-            System.out.println(root.getKey() + " " + sColor);
-            printHelper(root.getLeftChild(), indent, false);
-            printHelper(root.getRightChild(), indent, true);
         }
     }
 }
