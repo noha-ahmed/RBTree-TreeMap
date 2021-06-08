@@ -5,7 +5,6 @@ import java.util.*;
 public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	private RedBlackTree<T, V> redBlackTree = new RedBlackTree<T, V>();
-	private int size = 0;
 
 	@Override
 	public Map.Entry ceilingEntry(Comparable key) {
@@ -211,7 +210,10 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	public Map.Entry pollFirstEntry() {
 		Map.Entry<T, V> entry = firstEntry();
 		if (entry != null) {
-			this.redBlackTree.delete(entry.getKey());
+			boolean removed = this.redBlackTree.delete(entry.getKey());
+			if(removed){
+				this.redBlackTree.size--;
+			}
 		}
 		return entry;
 	}
@@ -220,7 +222,10 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	public Map.Entry pollLastEntry() {
 		Map.Entry<T, V> lastEntry = lastEntry();
 		if (lastEntry != null) {
-			this.redBlackTree.delete(lastEntry.getKey());
+			boolean removed = this.redBlackTree.delete(lastEntry.getKey());
+			if(removed){
+				this.redBlackTree.size--;
+			}
 		}
 		return lastEntry;
 	}
@@ -228,7 +233,6 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	@Override
 	public void put(Comparable key, Object value) {
 		this.redBlackTree.insert(key, value);
-		this.size++;
 	}
 
 	@Override
@@ -245,13 +249,13 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	@Override
 	public boolean remove(Comparable key) {
 		boolean removed = this.redBlackTree.delete(key);
-		if( removed ) size--;
+		if( removed ) this.redBlackTree.size--;
 		return removed;
 	}
 
 	@Override
 	public int size() {
-		return this.size;
+		return this.redBlackTree.getSize();
 	}
 
 	@Override

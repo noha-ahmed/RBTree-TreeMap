@@ -5,6 +5,11 @@ import javax.management.RuntimeErrorException;
 public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
     private INode root = null;
+    public int size=0;
+
+    public int getSize() {
+        return this.size;
+    }
 
     @Override
     public INode getRoot() {
@@ -162,7 +167,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
     @Override
     public void insert(Comparable key, Object value)  {
-        if(key == null){
+        if(key == null || value == null){
             throw new RuntimeErrorException(new Error(),"key is null");
         }
         // creating node
@@ -189,12 +194,12 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
                     return;
                 } else if (newNode.getKey().compareTo(parent.getKey()) > 0) {
                     x = x.getRightChild();
-                } else {
+                } else if(newNode.getKey().compareTo(parent.getKey()) < 0){
                     x = x.getLeftChild();
                 }
             }
         }
-
+        size++;
         newNode.setParent(parent);
         if(parent == null){
             this.root = newNode;
