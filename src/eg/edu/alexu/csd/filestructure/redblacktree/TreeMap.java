@@ -10,14 +10,22 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	@Override
 	public Map.Entry ceilingEntry(Comparable key) {
 		INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
+		if(node.isNull()){
+			node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
+			if(node == null){
+				return null;
+			}
+		}
 		Map.Entry<T, V> entry = new MapEntry<T, V>((T)node.getKey(),(V)node.getValue());
 		return entry;
 	}
 
 	@Override
 	public Comparable ceilingKey(Comparable key) {
-		INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
-		return node.getKey();
+		//INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
+		Map.Entry<T, V> entry = ceilingEntry(key);
+		if(entry  == null) return null;
+		return entry.getKey();
 	}
 	@Override
 	public void clear() {
@@ -85,14 +93,23 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	@Override
 	public Map.Entry floorEntry(Comparable key) {
 		INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
+		if(node.isNull()){
+			node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
+			if(node == null){
+				return null;
+			}
+		}
 		Map.Entry<T, V> entry = new MapEntry<T, V>((T)node.getKey(),(V)node.getValue());
 		return entry;
 	}
 
 	@Override
 	public Comparable floorKey(Comparable key) {
-		INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
-		return node.getKey();
+		//INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
+		Map.Entry<T, V> entry = floorEntry(key);
+		if(entry == null)
+			return null;
+		return entry.getKey();
 	}
 
 	@Override

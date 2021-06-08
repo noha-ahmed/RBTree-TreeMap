@@ -414,7 +414,6 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
         } else {
             return getSuccessor(node.getRightChild(), key, suc);
         }
-
     }
 
     public void printHelper(INode root, String indent, boolean last) {
