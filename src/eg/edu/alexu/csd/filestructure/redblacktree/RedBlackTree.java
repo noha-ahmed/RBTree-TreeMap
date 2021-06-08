@@ -24,6 +24,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
     @Override
     public void clear() {
         this.root = null;
+        this.size = 0;
     }
 
     public INode searchForNode(INode node, Comparable key) {
