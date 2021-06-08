@@ -184,7 +184,10 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
         if(x != null) {
             while (!x.isNull()) {
                 parent = x;
-                if (newNode.getKey().compareTo(parent.getKey()) > 0) {
+                if(newNode.getKey().compareTo(parent.getKey()) == 0){
+                    parent.setValue(value);
+                    return;
+                } else if (newNode.getKey().compareTo(parent.getKey()) > 0) {
                     x = x.getRightChild();
                 } else {
                     x = x.getLeftChild();
