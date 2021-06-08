@@ -215,10 +215,7 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	public Map.Entry pollFirstEntry() {
 		Map.Entry<T, V> entry = firstEntry();
 		if (entry != null) {
-			boolean removed = this.redBlackTree.delete(entry.getKey());
-			if(removed){
-				this.redBlackTree.size--;
-			}
+			this.redBlackTree.delete(entry.getKey());
 		}
 		return entry;
 	}
@@ -227,10 +224,7 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	public Map.Entry pollLastEntry() {
 		Map.Entry<T, V> lastEntry = lastEntry();
 		if (lastEntry != null) {
-			boolean removed = this.redBlackTree.delete(lastEntry.getKey());
-			if(removed){
-				this.redBlackTree.size--;
-			}
+			this.redBlackTree.delete(lastEntry.getKey());
 		}
 		return lastEntry;
 	}
@@ -256,9 +250,7 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public boolean remove(Comparable key) {
-		boolean removed = this.redBlackTree.delete(key);
-		if( removed ) this.redBlackTree.size--;
-		return removed;
+		return this.redBlackTree.delete(key);
 	}
 
 	@Override

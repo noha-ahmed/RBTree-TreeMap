@@ -18,7 +18,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
     @Override
     public boolean isEmpty() {
-        return (this.root == null);
+        return (this.root == null || this.root.isNull());
     }
 
     @Override
@@ -114,13 +114,6 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
         return leftChild;
     }
 
-    private void reColor(INode node) {
-        if (node.getColor()) {
-            node.setColor(Node.BLACK);
-        } else {
-            node.setColor(Node.RED);
-        }
-    }
 
     private void fixInsert(INode node){
         INode uncle = null;
@@ -237,8 +230,10 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
         INode node = searchForNode(root, key);
         if (node == null) return false;
+        this.size--;
         if ( root.getKey().equals(key) && root.getRightChild().isNull() && root.getLeftChild().isNull()){
-            root = null;
+            root = new Node();
+            root.setColor(Node.BLACK);
             return true;
         }
 
