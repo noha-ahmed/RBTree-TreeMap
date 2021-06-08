@@ -9,10 +9,10 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public Map.Entry ceilingEntry(Comparable key) {
-		INode node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
-		if(node.isNull()){
-			node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			if(node == null){
+		INode node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
+		if(node == null){
+			node = this.redBlackTree.getSuccessor(this.redBlackTree.getRoot(),key,new Node());
+			if(node.isNull()){
 				return null;
 			}
 		}
@@ -92,10 +92,10 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public Map.Entry floorEntry(Comparable key) {
-		INode node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
-		if(node.isNull()){
-			node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
-			if(node == null){
+		INode node = this.redBlackTree.searchForNode(this.redBlackTree.getRoot(), key);
+		if(node == null){
+			node = this.redBlackTree.getPredecessor(this.redBlackTree.getRoot(),key,new Node());
+			if(node.isNull()){
 				return null;
 			}
 		}

@@ -747,7 +747,7 @@ public class UnitTest {
 	 * Test ceiling Key normal.
 	 */
 	@Test
-	public void testCeilingKey2() {
+	public void fKey2() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
 

@@ -22,6 +22,7 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
     }
 
     public INode searchForNode(INode node, Comparable key) {
+        if(key == null) throw new RuntimeErrorException(new Error(),"key is null");
         if (node.isNull()) {
             return null;
         }
