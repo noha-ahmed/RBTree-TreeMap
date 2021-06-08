@@ -217,10 +217,11 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 	@Override
 	public void putAll(Map map) {
 		Set<Map.Entry<T, V>> enrtyset = map.entrySet();
-		Map.Entry<T, V>[] entries = (Map.Entry<T, V>[]) enrtyset.toArray();
+		//Map.Entry<T, V>[] entries = (Map.Entry<T, V>[]) enrtyset.toArray();
+		Object[] entries = enrtyset.toArray();
 		for (int i = 0; i < entries.length; i++) {
-			Map.Entry<T, V> entry = entries[i];
-			this.redBlackTree.insert(entry.getKey(), entry.getValue());
+			Map.Entry<T, V> entry = (Map.Entry<T, V>) entries[i];
+			put(entry.getKey(), entry.getValue());
 		}
 	}
 
