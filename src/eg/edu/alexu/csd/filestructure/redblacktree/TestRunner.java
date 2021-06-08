@@ -1,10 +1,10 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
-import org.junit.Assert;
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.List;
+
+import org.junit.Assert;
 
 
 public class TestRunner {
