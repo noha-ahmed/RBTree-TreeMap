@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
+import javax.management.RuntimeErrorException;
 import java.util.*;
 
 public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
@@ -34,6 +35,7 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public boolean containsKey(Comparable key) {
+
 		Object object = this.redBlackTree.search(key);
 		if(object==null)
 			return false;
@@ -42,6 +44,9 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public boolean containsValue(Object value) {
+		if(value==null){
+			throw new RuntimeErrorException(new Error(),"key is null");
+		}
 		Collection<Object> col = values();
 		return col.contains(value);
 	}
@@ -237,6 +242,9 @@ public class TreeMap<T extends Comparable<T>, V> implements ITreeMap {
 
 	@Override
 	public void putAll(Map map) {
+		if(map == null){
+			throw new RuntimeErrorException(new Error(),"Map is null");
+		}
 		Set<Map.Entry<T, V>> enrtyset = map.entrySet();
 		//Map.Entry<T, V>[] entries = (Map.Entry<T, V>[]) enrtyset.toArray();
 		Object[] entries = enrtyset.toArray();

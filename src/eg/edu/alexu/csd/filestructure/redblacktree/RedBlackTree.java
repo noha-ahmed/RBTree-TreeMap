@@ -56,7 +56,6 @@ public class RedBlackTree<T extends Comparable<T>, V> implements IRedBlackTree {
 
     @Override
     public boolean contains(Comparable key) {
-
         Object value = search(key);
         if (value != null)
             return true;
